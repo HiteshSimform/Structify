@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     "rest_framework",
     "users",
     "authentication",
-    "employee",
+    "employees",
+    "designations",
+    "leaves",
+    "salaries",
 ]
 
 MIDDLEWARE = [
@@ -85,6 +88,7 @@ WSGI_APPLICATION = "Structify.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
+AUTH_USER_MODEL = 'users.CustomUser'
 
 DATABASES = {
     "default": {
