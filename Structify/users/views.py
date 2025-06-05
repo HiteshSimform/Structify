@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import status
+
 # Create your views here.
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -13,6 +14,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 class UserRegisterAPIView(APIView):
 
     def post(self, request):
@@ -23,16 +25,13 @@ class UserRegisterAPIView(APIView):
             user = CustomUser.objects.create_user(
                 email=data["email"],
                 first_name=data["first_name"],
-                last_name = data["last_name"],
-                password=data["password"]
+                last_name=data["last_name"],
+                password=data["password"],
             )
 
             return Response(
-                {
-                    "message": "User registered successfully",
-                    "email": user.email
-                },
-                status=status.HTTP_201_CREATED
+                {"message": "User registered successfully", "email": user.email},
+                status=status.HTTP_201_CREATED,
             )
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
