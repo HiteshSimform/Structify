@@ -11,7 +11,7 @@ def email_only(value):
         raise ValidationError("email must be Gmail")
 
 
-class CustomUser(AbstractBaseUser, PermissionsMixin): 
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, blank=False, validators=[email_only])
     first_name = models.CharField(max_length=100, null=False, blank=False)
     last_name = models.CharField(max_length=100, null=False, blank=False)
@@ -25,7 +25,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
     def __str__(self):
         return f"{self.email}"

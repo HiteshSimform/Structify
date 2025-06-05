@@ -361,3 +361,13 @@ class Employee(models.Model):
 ---
 
 Do you want me to generate this full dashboard code with template and view for you next?
+
+
+
+    # def save(self, *args, **kwargs):
+    #     if self.is_deleted and not self.deleted_by:
+    #         self.deleted_by = self.modified_by 
+            
+    #         self.deleted_at = timezone.now()
+            
+    #     super().save(*args, **kwargs)
