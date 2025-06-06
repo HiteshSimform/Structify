@@ -33,7 +33,7 @@ class Designation(models.Model):
         blank=True,
         related_name="deleted_designations",
     )
+    deleted_at = models.DateTimeField(null=True, blank=True, auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
-
     def __str__(self):
         return self.name
