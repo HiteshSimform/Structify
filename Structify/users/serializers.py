@@ -64,3 +64,9 @@ class ResetPasswordSerializer(serializers.Serializer):
 
 class RequestResetPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ["id", "first_name", "last_name", "email"]

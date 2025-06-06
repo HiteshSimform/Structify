@@ -12,6 +12,7 @@ from django.utils import timezone
 from .permissions import IsAdminOrReadOnly
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+
 class DesignationListCreateAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsAdminOrReadOnly]
     authentication_classes = [JWTAuthentication]
