@@ -10,12 +10,11 @@ from .serializers import DesignationSerializer, PublicDesignationSerializer
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from .permissions import IsAdminOrReadOnly
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class DesignationListCreateAPIView(APIView):
-    # permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
-    # permission_classes = [permissions.AllowAny]
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminOrReadOnly]
+    authentication_classes = [JWTAuthentication]
 
     def get_serializer_class(self):
         if self.request.user and self.request.user.is_staff:
@@ -37,8 +36,7 @@ class DesignationListCreateAPIView(APIView):
 
 
 class DesignationDetailAPIView(APIView):
-    # permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminOrReadOnly]
 
     def get_object(self, pk):
         return get_object_or_404(Designation, pk=pk, is_deleted=False)

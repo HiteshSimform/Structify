@@ -7,7 +7,6 @@ from django.utils import timezone
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
-
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
@@ -25,7 +24,6 @@ class LoginSerializer(serializers.Serializer):
         user.last_login = timezone.now()
         user.save()
 
-
         refresh = RefreshToken.for_user(user)
 
         return {
@@ -34,5 +32,3 @@ class LoginSerializer(serializers.Serializer):
             "access": str(refresh.access_token),
             "message": "Login Successfull",
         }
-
-        return {"user": {"id": user.id, "email": user.email}}
