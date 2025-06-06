@@ -7,6 +7,7 @@ from django.utils import timezone
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
+
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
@@ -17,11 +18,13 @@ class LoginSerializer(serializers.Serializer):
 
         if not email or not password:
             raise ValidationError("Email and Password are required")
+
         user = authenticate(email=email, password=password)
         if not user:
             raise ValidationError("Invalid user or password")
         user.last_login = timezone.now()
         user.save()
+
 
         refresh = RefreshToken.for_user(user)
 
@@ -31,3 +34,5 @@ class LoginSerializer(serializers.Serializer):
             "access": str(refresh.access_token),
             "message": "Login Successfull",
         }
+
+        return {"user": {"id": user.id, "email": user.email}}
