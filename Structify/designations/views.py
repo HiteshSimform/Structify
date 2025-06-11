@@ -29,7 +29,7 @@ class DesignationListCreateAPIView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = DesignationSerializer(data=request.data)
+        serializer = DesignationSerializer(data=request.data, many=True)
         if serializer.is_valid():
             serializer.save(created_by=request.user, modified_by=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
