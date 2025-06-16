@@ -4,11 +4,17 @@ from django.shortcuts import render
 from django.shortcuts import render
 from rest_framework import generics, permissions
 from .models import Salary
-from .serializers import SalarySerializer, SalaryCreateUpdateSerializer, DepartmentSalarySummarySerializer, DepartmentExpenseSerializer
+from .serializers import (
+    SalarySerializer,
+    SalaryCreateUpdateSerializer,
+    DepartmentSalarySummarySerializer,
+    DepartmentExpenseSerializer,
+)
 from django.utils import timezone
 from .permissions import IsAdminOrHR
 from django.db.models import Sum, Avg, Count, F
 from users.permissions import IsMainAdminOrReadOnly
+
 
 class BaseSalaryView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated, IsAdminOrHR]
@@ -42,7 +48,9 @@ class SalaryListCreateAPIView(BaseSalaryView, generics.ListCreateAPIView):
         serializer.save(created_by=self.request.user, modified_by=self.request.user)
 
 
-class SalaryRetrieveUpdateDestroyAPIView(BaseSalaryView, generics.RetrieveUpdateDestroyAPIView):
+class SalaryRetrieveUpdateDestroyAPIView(
+    BaseSalaryView, generics.RetrieveUpdateDestroyAPIView
+):
     queryset = Salary.objects.none()
 
     def get_serializer_class(self):
@@ -86,10 +94,11 @@ class DepartmentExpenseAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated, IsMainAdminOrReadOnly]
 
     def get_queryset(self):
-        return(
+        return (
             Salary.objects.filter(is_deleted=False)
             .values(department=F("employee__department__name"))
             .annotate(
                 total_expense=Sum("net_salary"),
                 employee_count=Count("employee", distinct=True),
-            ))
+            )
+        )
